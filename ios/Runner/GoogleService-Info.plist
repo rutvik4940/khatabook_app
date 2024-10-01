@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyA5v28V_cDGDYUk9SEdfu9tCWfCO9qTRI8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>273578807446</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.khataApp</string>
+	<key>PROJECT_ID</key>
+	<string>khatabookapp-aa601</string>
+	<key>STORAGE_BUCKET</key>
+	<string>khatabookapp-aa601.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:273578807446:ios:5157e0e1c1b3f51cf0b2b7</string>
+</dict>
+</plist>

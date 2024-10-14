@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:khata_app/screen/addentry/model/entry_model.dart';
 import 'package:khata_app/utils/common/colors.dart';
 import 'package:khata_app/utils/common/textstyle.dart';
+
+import '../../home/controller/home_controller.dart';
 
 class PaymentReminderScreen extends StatefulWidget {
   const PaymentReminderScreen({super.key});
@@ -10,86 +15,29 @@ class PaymentReminderScreen extends StatefulWidget {
 }
 
 class _PaymentReminderScreenState extends State<PaymentReminderScreen> {
-
+  HomeController controller = Get.put(HomeController());
+ late entryModel model;
+  void initState() {
+    super.initState();
+    model = Get.arguments as entryModel;
+  }
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.sizeOf(context).height;
     double w = MediaQuery.sizeOf(context).width;
     return Scaffold(
-      backgroundColor: white,
-      appBar: AppBar(
-        backgroundColor: bluePrimary,
-        title: Text("Payment Reminder",style: textStyle,),
-      ),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text("data"),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.date_range,
-                  color: black,
-                ),
-              ),
-            ],
+        backgroundColor: white,
+        appBar: AppBar(
+          backgroundColor: bluePrimary,
+          title: Text(
+            "Payment Reminder",
+            style: TextStyle(color: white),
           ),
-          Expanded(
-            child: ListView.builder(itemCount: 10,itemBuilder: (context, index) {
-              return Container(
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.all(10),
-                height: h * 0.14,
-                width: w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color:white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: black,
-                      blurRadius: 0.1,
-                    )
-                  ],
-                ),
-                child: Column(
-                 mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text("Customer Name :- ",style: textStyle,),
-                        Text("data",style: textStyle,),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text("Product Name :- ",style: textStyle1,),
-                        Text("data",style: textStyle1,),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text("Price :-",style: textStyle1,),
-                        Text("data",style: textStyle1,),
-                        Spacer(),
-                        Text("\$2000",style: textStyle1,),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text("Product Quantity :-",style: textStyle1,),
-                        Text("data",style: textStyle1,),
-                      ],
-                    ),
-
-                  ],
-                ),
-              );
-            },),
-          ),
-        ],
-      ),
-    );
+        ),
+        body: Column(
+          children: [
+            Obx(() =>  Text("${model.username}")),
+          ],
+        ));
   }
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:khata_app/screen/addentry/model/entry_model.dart';
 import 'package:khata_app/utils/common/colors.dart';
 import 'package:khata_app/utils/common/textstyle.dart';
 
+import '../../../utils/helper/entry_helper.dart';
 import '../controller/home_controller.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -72,7 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       "Debit Amount :",
                       style: textStyle1,
                     ),
-                    Text("0", style: textStyle1),
+                    Obx(() =>
+                        Text("${controller.debit.value}", style: textStyle1)),
                   ],
                 ),
                 SizedBox(
@@ -84,7 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       "Credit Amount :",
                       style: textStyle1,
                     ),
-                    Text("0", style: textStyle1),
+                    Obx(
+                      () =>
+                          Text("${controller.credit.value}", style: textStyle1),
+                    ),
                   ],
                 )
               ],
@@ -93,16 +99,19 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             child: Obx(
               () => ListView.builder(
+                // reverse: false,
                 itemCount: controller.entryList.length,
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      Get.toNamed("payment");
+                      Get.toNamed("transaction",
+                          arguments: controller.entryList[index]);
+                      controller.index.value=index;
                     },
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.all(10),
-                      height: h * 0.10,
+                      height: h * 0.11,
                       width: w,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -121,10 +130,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: CircleAvatar(
+                                  backgroundColor: bluePrimary,
                                   radius: 30,
                                   child: Text(
                                     "${controller.entryList[index].username?.substring(0, 1)}",
-                                    style: const TextStyle(fontSize: 25),
+                                    style:
+                                        TextStyle(fontSize: 25, color: white),
                                   ),
                                 ),
                               ),
@@ -136,11 +147,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   SizedBox(
                                     height: h * 0.001,
                                   ),
-                                   Text(
-                                          "${controller.entryList[index].username ?? "No Name"}",
-                                          style: const TextStyle(fontSize: 16),
-                                          // style: textStyle,
-                                        ),
+                                  Text(
+                                    controller.entryList[index].username ?? "No Name",
+                                    style: const TextStyle(fontSize: 18),
+                                    // style: textStyle,
+                                  ),
                                 ],
                               ),
                               const Spacer(),
@@ -149,12 +160,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 style: TextStyle(
                                     color:
                                         controller.entryList[index].status == 1
-                                            ? Colors.green
-                                            : Colors.red,
-                                    fontSize: 16),
+                                            ? Colors.red
+                                            : Colors.green,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),

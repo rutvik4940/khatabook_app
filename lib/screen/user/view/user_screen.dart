@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:khata_app/utils/common/colors.dart';
+import 'package:khata_app/utils/helper/firebase_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../utils/common/textstyle.dart';
@@ -21,6 +23,7 @@ class _UserScreenState extends State<UserScreen> {
   void initState() {
     super.initState();
     controller.userGetData();
+    controller.entryGetData();
   }
 
   @override
@@ -35,12 +38,13 @@ class _UserScreenState extends State<UserScreen> {
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  Get.toNamed("profile");
+                // controller.get(index);
+                      Get.toNamed("profile",arguments: controller.list[index]);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   margin: const EdgeInsets.all(10),
-                  height: h * 0.10,
+                  height: h * 0.11,
                   width: w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -59,10 +63,11 @@ class _UserScreenState extends State<UserScreen> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: CircleAvatar(
+                              backgroundColor: bluePrimary,
                               radius: 30,
                               child: Text(
                                 "${controller.list[index].name?.substring(0, 1)}",
-                                style: const TextStyle(fontSize: 30),
+                                style: TextStyle(fontSize: 25,color:white),
                               ),
                             ),
                           ),
@@ -83,22 +88,34 @@ class _UserScreenState extends State<UserScreen> {
                           const Spacer(),
                           Row(
                             children: [
-                              IconButton.filled(
-                                onPressed: () async {
-                                  String call =
-                                      "tel:91${controller.list[index].number}";
-                                  await launchUrl(Uri.parse(call));
-                                },
-                                icon: const Icon(Icons.call),
+                              Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.green,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: IconButton(
+                                  onPressed: () async {
+                                    String call = "tel:91${controller.list[index].number}";
+                                    await launchUrl(Uri.parse(call));
+                                  },
+                                  icon: const Icon(Icons.call),
+                                  color: Colors.white,
+                                ),
                               ),
-                              IconButton.filled(
-                                onPressed: () async {
-                                  String sms =
-                                      "sms:91${controller.list[index].number}";
-                                  await launchUrl(Uri.parse(sms));
-                                },
-                                icon: const Icon(
-                                  Icons.sms,
+                              SizedBox(width: w*0.04,),
+                              Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.blue,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: IconButton(
+                                  onPressed: () async {
+                                    String sms =
+                                        "sms:91${controller.list[index].number}";
+                                    await launchUrl(Uri.parse(sms));
+                                  },
+                                  icon: const Icon(Icons.sms),
+                                  color: Colors.white,
                                 ),
                               ),
                             ],

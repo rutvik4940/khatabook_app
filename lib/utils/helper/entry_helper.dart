@@ -16,13 +16,16 @@ class EntryHelper
       "date": model.date,
       "status": model.status,
       "username":model.username,
-      "total":model.total
+      "total":model.total,
+      "creditDate":model.creditDate,
+      "userId":model.userId,
 
     });
   }
 
   Future<List<entryModel>> read() async {
     QuerySnapshot data = await db.collection("entry").get();
+    print("================${data.docs}");
     List<QueryDocumentSnapshot<Object?>> data1 = data.docs;
     List<entryModel> model = data1
         .map(
@@ -40,7 +43,9 @@ class EntryHelper
       "date": model.date,
       "status": model.status,
       "username":model.username,
-      "total":model.total
+      "total":model.total,
+      "creditDate":model.creditDate,
+      "userId":model.userId,
     });
   }
 

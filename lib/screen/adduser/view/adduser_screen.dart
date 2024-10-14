@@ -15,16 +15,16 @@ class AdduserScreen extends StatefulWidget {
 }
 
 class _AdduserScreenState extends State<AdduserScreen> {
-
   TextEditingController txtName = TextEditingController();
   TextEditingController txtNumber = TextEditingController();
-  TextEditingController txtAddress = TextEditingController();
   TextEditingController txtArea = TextEditingController();
   TextEditingController txtPincode = TextEditingController();
+  TextEditingController txtAddress = TextEditingController();
   TextEditingController txtCity = TextEditingController();
   TextEditingController txtState = TextEditingController();
+  TextEditingController txtEmail = TextEditingController();
 
-  HomeController controller=Get.put(HomeController());
+  HomeController controller = Get.put(HomeController());
 
   final _formKey = GlobalKey<FormState>();
 
@@ -35,7 +35,8 @@ class _AdduserScreenState extends State<AdduserScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: bluePrimary,
-        title: const Text("Add User"),
+        iconTheme: IconThemeData(color: white),
+        title:  Text("Add User",style: TextStyle(color: white),),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -45,36 +46,249 @@ class _AdduserScreenState extends State<AdduserScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                buildTextField("Name", txtName, TextInputType.text),
-                buildTextField("Number", txtNumber, TextInputType.phone),
-                buildTextField(
-                    "Address", txtAddress, TextInputType.streetAddress),
-                buildTextField("Area", txtArea, TextInputType.text),
-                buildTextField("Pincode", txtPincode, TextInputType.number),
-
-                SizedBox(
-                  width: w * 0.9,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 12),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: buildTextField(
-                              "City", txtCity, TextInputType.text),
-                        ),
-                        SizedBox(width: w * 0.09),
-                        // Add space between TextFields
-                        Expanded(
-                          child: buildTextField(
-                              "State", txtState, TextInputType.text),
-                        ),
-                      ],
+                TextFormField(
+                  controller: txtName,
+                  maxLength: 16,
+                  keyboardType: TextInputType.name,
+                 textCapitalization: TextCapitalization.characters,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Required";
+                    }
+                    if (value.length > 16) {
+                      return 'Maximum 16 characters allowed';
+                    }
+                    if (value[0] != value[0].toUpperCase()) {
+                      return 'First letter must be capitalized';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    label: const Text("Name"),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                      ),
                     ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
-
-                SizedBox(height: 20),
-                // Add User Button
+                SizedBox(height: h*0.01,),
+                TextFormField(
+                  controller: txtNumber,
+                  maxLength: 10,
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Required';
+                    }
+                    if (value.length != 10) {
+                      return 'Please enter exactly 10 digits';
+                    }
+                    if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                      return 'Only numbers are allowed';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    label: const Text("Number"),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                    border: const OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: h*0.01,),
+                TextFormField(
+                  controller: txtEmail,
+                  maxLength: 25,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Required';
+                    }
+                    // Regex for validating an Email
+                    String emailPattern =
+                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+                    if (!RegExp(emailPattern).hasMatch(value)) {
+                      return 'Please enter a valid email address';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    label: const Text("Email"),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                    border: const OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: h*0.01,),
+                TextFormField(
+                  controller: txtArea,
+                  maxLength: 12,
+                  keyboardType: TextInputType.name,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Required";
+                    }
+                    if (value.length < 2) {
+                      return 'Maximum 12 characters allowed';
+                    }
+                  },
+                  decoration: InputDecoration(
+                    label: const Text("Area"),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                    border: const OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: h*0.01,),
+                TextFormField(
+                  controller: txtAddress,
+                  maxLength: 32,
+                  keyboardType: TextInputType.name,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Required';
+                    }
+                    if (value.length < 5) {
+                      return 'Address must be at least 10 characters long';
+                    }
+                    if (!RegExp(r'^[a-zA-Z0-9\s,.-]+$').hasMatch(value)) {
+                      return 'Address can only contain alphanumeric characters, spaces, commas, and dots';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    label: const Text("Address"),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                    border: const OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: h*0.01,),
+               Row(
+                 children: [
+                   Expanded(
+                     child: TextFormField(
+                       controller: txtCity,
+                       maxLength: 12,
+                       keyboardType: TextInputType.name,
+                       validator: (value) {
+                         if (value == null || value.isEmpty) {
+                           return 'Required';
+                         }
+                         if (value.length < 2) {
+                           return 'City name must be at least 2 characters long';
+                         }
+                         if (value.length > 12) {
+                           return 'City name must not exceed 50 characters';
+                         }
+                         return null;
+                       },
+                       decoration: InputDecoration(
+                         label: const Text("City"),
+                         focusedBorder: OutlineInputBorder(
+                           borderRadius: BorderRadius.circular(50),
+                           borderSide: const BorderSide(
+                             color: Colors.black,
+                           ),
+                         ),
+                         enabledBorder: OutlineInputBorder(
+                           borderRadius: BorderRadius.circular(15.0),
+                           borderSide: const BorderSide(
+                             color: Colors.black,
+                           ),
+                         ),
+                         border: const OutlineInputBorder(),
+                       ),
+                     ),
+                   ),
+                   SizedBox(width: w*0.01,),
+                   Expanded(
+                     child: TextFormField(
+                       controller: txtState,
+                       maxLength: 16,
+                       keyboardType: TextInputType.name,
+                       validator: (value) {
+                         if (value == null || value.isEmpty) {
+                           return 'Required';
+                         }
+                         if (value.length < 2) {
+                           return 'State must be at least 10 characters long';
+                         }
+                         if (!RegExp(r'^[a-zA-Z0-9\s,.-]+$').hasMatch(value)) {
+                           return 'State can only contain alphanumeric characters, spaces, commas, and dots';
+                         }
+                         return null;
+                       },
+                       decoration: InputDecoration(
+                         label: const Text("State"),
+                         focusedBorder: OutlineInputBorder(
+                           borderRadius: BorderRadius.circular(50),
+                           borderSide: const BorderSide(
+                             color: Colors.black,
+                           ),
+                         ),
+                         enabledBorder: OutlineInputBorder(
+                           borderRadius: BorderRadius.circular(15.0),
+                           borderSide: const BorderSide(
+                             color: Colors.black,
+                           ),
+                         ),
+                         border: const OutlineInputBorder(),
+                       ),
+                     ),
+                   ),
+                 ],
+               ),
+                SizedBox(height: h*0.02),
                 Center(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -87,17 +301,25 @@ class _AdduserScreenState extends State<AdduserScreen> {
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                      userModel model=userModel(
-                        state:txtState.text ,
-                        pincode: txtPincode.text,
-                        number: txtNumber.text,
-                        name: txtName.text,
-                        area: txtArea.text,
-                        city:txtCity.text,
-                        address: txtAddress.text,
-                      );
-                      await FBHelper.helper.add(model);
-                      controller.userGetData();
+                        userModel model=userModel(
+                          state:txtState.text ,
+                          pincode: txtPincode.text,
+                          number: txtNumber.text,
+                          name: txtName.text,
+                          area: txtArea.text,
+                          city:txtCity.text,
+                          address: txtAddress.text,
+                        );
+                        await FBHelper.helper.add(model);
+                        controller.userGetData();
+                        txtName.clear();
+                        txtAddress.clear();
+                        txtCity.clear();
+                        txtArea.clear();
+                        txtNumber.clear();
+                        txtPincode.clear();
+                        txtState.clear();
+                        Get.back();
 
                       }
                     },
@@ -111,31 +333,6 @@ class _AdduserScreenState extends State<AdduserScreen> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget buildTextField(String labelText, TextEditingController controller,
-      TextInputType keyboardType) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        decoration: InputDecoration(
-          labelText: labelText,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          // filled: true,
-          // fillColor:white,
-        ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Please enter $labelText';
-          }
-          return null;
-        },
       ),
     );
   }

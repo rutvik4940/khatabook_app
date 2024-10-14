@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:khata_app/screen/addentry/model/entry_model.dart';
-import 'package:khata_app/utils/helper/entry_helper.dart';
+import 'package:get/get_core/src/get_main.dart';
+
 import '../../../utils/common/colors.dart';
+import '../../../utils/helper/entry_helper.dart';
+import '../../addentry/model/entry_model.dart';
 import '../../home/controller/home_controller.dart';
 
-class AddEntryScreen extends StatelessWidget {
+class EntryUpdateScreen extends StatefulWidget {
+  const EntryUpdateScreen({super.key});
+
+  @override
+  State<EntryUpdateScreen> createState() => _EntryUpdateScreenState();
+}
+
+class _EntryUpdateScreenState extends State<EntryUpdateScreen> {
   final formKey = GlobalKey<FormState>();
   HomeController controller = Get.put(HomeController());
   TextEditingController txtName = TextEditingController();
@@ -14,14 +23,10 @@ class AddEntryScreen extends StatelessWidget {
   TextEditingController txtPrice = TextEditingController();
   double h = 0;
   double w = 0;
-
-  AddEntryScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: white,
       appBar: AppBar(
@@ -252,14 +257,13 @@ class AddEntryScreen extends StatelessWidget {
                             },
                           ),
                         ),
-
                         Row(
                           children: [
                             Obx(
                                   () => Text(
                                 '${controller.selectedDate.value.day}/${controller.selectedDate.value.month}/${controller.selectedDate.value.year}',
                                 style: const TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                             ),
                             IconButton(
@@ -319,7 +323,7 @@ class AddEntryScreen extends StatelessWidget {
                           controller.entryGetData();
                           txtQua.clear();
                           txtPrice.clear();
-                          controller.selectedValue1.value = 0;
+                          // controller.selectedValue1.value = 0;
                           // controller.totalAmount.value = 0;
                           // controller.selectedValue.value="0";
                           Get.back();
